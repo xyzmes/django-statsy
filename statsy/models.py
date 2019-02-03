@@ -65,20 +65,20 @@ class StatsyEvent(StatsyCategory):
 class StatsyObject(models.Model):
     group = models.ForeignKey(
         'StatsyGroup', blank=True, null=True,
-        related_name='statsy_object_list', verbose_name='group'
+        related_name='statsy_object_list', verbose_name='group', on_delete=models.CASCADE
     )
     event = models.ForeignKey(
         'StatsyEvent', blank=True, null=True,
-        related_name='statsy_object_list', verbose_name='event'
+        related_name='statsy_object_list', verbose_name='event', on_delete=models.CASCADE
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True,
-        related_name='statsy_object_list', verbose_name='user'
+        related_name='statsy_object_list', verbose_name='user', on_delete=models.CASCADE
     )
 
     label = models.CharField(max_length=255, blank=True, null=True, verbose_name='label')
 
-    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    content_type = models.ForeignKey(ContentType, blank=True, null=True, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(blank=True, null=True)
     content_object = GenericForeignKey('content_type', 'object_id')
 
