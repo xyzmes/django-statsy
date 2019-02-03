@@ -29,8 +29,8 @@ class Statsy(object):
         'value', 'url', 'duration', 'extra', 'callback'
     ]
 
-    def __init__(self, async=True, cache=True):
-        if ASYNC and async:
+    def __init__(self, cache=True):
+        if ASYNC:
             self.send = self._send_async
         else:
             self.send = self._send
@@ -57,7 +57,7 @@ class Statsy(object):
                 result = func(request, *inner_args, **inner_kwargs)
                 duration = int((time.time() - time_start) * 1000)
 
-                user = request.user if request.user.is_authenticated() else None
+                user = request.user if request.user.is_authenticated else None
 
                 if watch_with_params:
                     self.send(
